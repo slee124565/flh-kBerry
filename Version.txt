@@ -1,0 +1,5 @@
+
+kdriveExpress Edition SDK.
+Free license
+Version: kdriveExpress-16.1.0
+Build: kdrive-trunk

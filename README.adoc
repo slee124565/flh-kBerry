@@ -1,0 +1,95 @@
+= kdriveExpress SDK
+
+
+== Introduction
+
+The kdrive Access Express Edition Library is a C library
+which enables KNX Bus Access via Interface Devices, such as
+the KNX USB Interface 310 and KNX IP Interface 730 from
+Weinzierl Engineering.
+
+This is a binary SDK.
+
+
+== Contents
+
+The SDK contains:
+
+bin:: Win32 Library Binaries (only for the windows sdk)
+docs:: SDK documentation
+include:: C Header Files
+lib:: Linux Shared Library or Win32 Lib files
+samples:: C, C# and python sample files (C# only for the windows sdk)
+
+The SDK does not contain
+* build or makefiles
+
+
+== Compiled With
+
+For kdriveExpress-*-windows.zip::
+Visual Studio 12 2013 32-bit
+
+For kdriveExpress-*-ubuntu-32bit.tar.gz::
+Ubuntu 14.04 32-bit
+
+For kdriveExpress-*-ubuntu-64bit.tar.gz::
+Ubuntu 14.04 64-bit
+
+For kdriveExpress-*-raspbian.tar.gz::
+Raspbian toolchain from https://github.com/raspberrypi/tools/tree/master/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian
+
+NOTE: For each platform exist an own zip or tar file. +
+You could download it from our website: http://www.weinzierl.de/index.php/en/
+
+Please contact us if you need the binaries for other platforms
+and/or architectures.
+
+
+== Getting Started C
+
+* Read the documentation
+* Compile the samples.
+
+=== For Windows (for example)
+* Create a Visual Studio console project for each of the c samples.
+* Set the include path in the project properties.
+  => Right click on the project - in Configuration Properties - C/C++ - General
+     add the include folder directory of kdriveExpress to 'Additional Include Directories'
+* Add the lib path in the project properties.
+  => Right click on the project - in Configuration Properties - Linker - General
+     add the lib folder directory of kdriveExpress to 'Additional Library Directories'
+* Add the kdriveExpress.lib dependency +
+  => Right click on the project - in Configuration Properties - Linker - Input
+     add "kdriveExpress.lib" to 'Additional Dependencies'
+* Copy the dll to the build path.
+
+=== For Linux (for example)
+* Copy kdriveExpress.so to /usr/local/lib
+* run ldconfig
+* Compile the samples, i.e.
+* gcc -I../../include -Wl,-rpath,/usr/local/lib -o kdrive_express_usb kdrive_express_usb.c -lkdriveExpress -lpthread
+
+
+== Getting Started .NET
+
+* pre-compiled DLL's can be found in the SDK for Visual Studio 12 2013.
+* Simply add a reference to the corresponding DLL
+* in your .net (e.g. c#) project, i.e. kdriveExpress_dotnet.dll
+
+NOTE: kdriveExpress_dotnet.dll no longer requires kdriveExpress.dll
+
+
+== Supported Interfaces
+
+* KNX USB Interface 310/311/320/330
+* KNX IP Interface 730
+* KNX IP Interface 740 Wireless
+* KNX IP Router 750
+* KNX IP BAOS 770/771/772/777
+* KNX TinySerial 810
+
+
+== Support
+
+Contact info@weinzierl.de

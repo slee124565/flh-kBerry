@@ -1,0 +1,15 @@
+ACTION!="add|change", GOTO="knx_end"
+
+# [WeinzierlEngineering_0E77_0102]
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0e77", ATTRS{idProduct}=="0102", GROUP="knx"
+
+# [WeinzierlEngineering_0E77_0103]
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0e77", ATTRS{idProduct}=="0103", GROUP="knx"
+
+# [WeinzierlEngineering_0E77_0104]
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0e77", ATTRS{idProduct}=="0104", GROUP="knx"
+
+# [WeinzierlEngineering_0E77_2001]
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0e77", ATTRS{idProduct}=="2001", GROUP="knx"
+
+LABEL="knx_end"

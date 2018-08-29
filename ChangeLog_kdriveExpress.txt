@@ -1,0 +1,526 @@
+
+kdriveExpress Release Notes and Change Log
+==========================================
+
+Release kdriveExpress-16.1.0 (2015-03-04)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-1112] - Added c interface for open access port for TP Transceivers
+[KDRIVE-1117] - Fixed the field dev_name in ip_tunn_dev_t struct was for the utf8 encoding to small
+[KDRIVE-1128] - knx ft1.2 Changed PEI_Identify format for cEMI
+
+Services
+~~~~~~~~
+
+[KDRIVE-1109] - Added c binding and .net wrapper for SystemNetworkParameterRead and -Write 
+                services 
+[KDRIVE-1131] - Added c binding and .net wrapper for IsIndividualAddressFree service
+
+other 
+~~~~~
+
+[KDRIVE-1070] - Added a sample with TinySerial
+[KDRIVE-1127] - Fixed meaning for repeat flag in cEMI L_Data.req telegrams. 
+                There is a contradiction in the KNX Specification 03_06_03 EMI_IMI v01.03.03 AS.
+                 Now we use the same meaning as the ETS used. 
+                 (1=repeat if error; 0 = do not repeat)
+
+Release kdriveExpress-15.4.0 (not public released)
+--------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-1107] - Added function for get the max supported apdu length from the
+                interface
+
+Services
+~~~~~~~~
+
+[KDRIVE-1107] - Supported long frames in device services. Added for this following functions:
+                for c interface:
+                - kdrive_sp_set_max_apdu_length
+                - kdrive_sp_get_max_apdu_length
+                for dotnet:
+                - SetMaxApduLength
+                - GetMaxApduLength
+
+Release kdriveExpress-15.3.0 (not public released)
+--------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-1069] - Added support for Weinzierl cEMI FT1.2 interfaces
+[KDRIVE-1083] - Fixed TinySerial: Fixed the repeat flag was set to repeated but it was not repeated
+
+Release kdriveExpress-15.2.0 (not public released)
+--------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-1041] - Supported PID_COMM_MODES_SUPPORTED for cEMI interfaces (USB and IP-Tunneling) for 
+                get supported layers. When this optional property not exist use default values as 
+                before.
+[KDRIVE-1044] - Changed TunnelingPort::setTunnelIndividualAddress: Now we writes only the new 
+                address and not the whole address array. Also do not set actual numbers to 0. 
+                Throw an exeption when the new address used by other tunnel.
+[KDRIVE-1047] - Added kdrive_ap_is_compressed_group_data function for determines if the group value 
+                size is compressed (6 bits or less).
+[KDRIVE-1050] - The field dev_name in ip_tunn_dev_t struct is now in ut8 encoding (before latin1)
+[KDRIVE-1053] - TunnelingPort: Supported local transport layer messages
+
+Services
+~~~~~~~~
+
+[KDRIVE-1040] - Fixed transport layer sends a N_NACK with an wrong seq no when it received an 
+                invalid seq no
+
+other
+~~~~~
+
+[KDRIVE-1048] - Added kdrive_ap_set_packet_trace_callback function for customize packet traces
+[KDRIVE-1049] - Added kdrive_logger_set_callback function for customize logging
+
+
+Release kdriveExpress-15.1.0 (2015-04-01)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-484]  - Supported Network Address Translation (NAT) - Mode for the Tunneling AccessPort.
+[KDRIVE-984]  - Supported set port number of server (knx ip interface device) for tunneling access port
+[KDRIVE-985]  - Added error condition for kdrive_ap_get_group_data when the telegram parse function fails
+                (without throwing an internal exception)
+[KDRIVE-986]  - Used NPDU length to determine the length of the group data, and not the telegram length 
+                passed as a parameter
+[KDRIVE-1005] - Read max apdu length from knx interfaces on open        
+[KDRIVE-1014] - TunnelingPort: Use field KNX medium from search response (on enumeration) for 
+                property PID_MEDIUM_TYPE so we do not read it again in open
+[KDRIVE-1015] - TunnelingPort: Added workaround for KNX IP Tunneling interface which do not support
+                PID_MEDIA_TYPE in cEMI object. Try read it via KNXnet/IP DescriptionRequestFrame
+[KDRIVE-1022] - Implemented missing telegram conversion for received EMI1/EMI2 L_Busmon.ind telegrams to cEMI
+[KDRIVE-1025] - Changed TunnelingPort behavior: Open the management connection only when really needed
+[KDRIVE-1029] - TunnelingPort: When read serial number via local device management failed with 
+                DeviceManagementAlreadyOpenException then try it with a Description service       
+        
+Services
+~~~~~~~~
+
+[KDRIVE-980]  - Increased write complete wait time: Wait after write individual address or domain
+                address via prog mode or serial number 200 ms 
+                (before 50 ms, some controller need more time)
+[KDRIVE-982]  - Fixed device and broadcast services should send with system priority 
+                (instead of low priority)
+[KDRIVE-993]  - Fixed wrong base address in UserMemory services. Was always set to 0
+[KDRIVE-994]  - Supported in MemoryBlockRead user memory addresses (0x10000 - 0xFFFFF). 
+                Used for this range A_UserMemory_Read service
+[KDRIVE-995]  - Supported in MemoryBlockWrite user memory addresses (0x10000 - 0xFFFFF). 
+                Used for this range A_UserMemory_Write service    
+
+Release kdriveExpress-14.5.0 (2014-11-05)
+-----------------------------------------
+
+Note: this is the first release of the restructured kdrive for C++11
+The version number kdrive-14.4.0 has been reserved
+
+Access
+~~~~~~
+
+[KDRIVE-976] - Fixed kdrive_ap_packet_trace_connect to check that the port is open
+[KDRIVE-579] - kdriveExpress Added functions for get usb enumeration info like vendor and product id.
+[KDRIVE-950] - Added c interface for extended usb device enumeration.
+               (array with usb device information e.g. media types, usb vendor, ..)
+         
+Services
+~~~~~~~~
+
+[KDRIVE-943] - Filter in ServicePort telegrams with other destination IA and RF domain address
+              (independent was set in access port properties)
+
+other
+~~~~~
+
+[KDRIVE-975] - Added Remote Syslog Logger
+[KDRIVE-978] - Fixed wrong endian detection for MIPS platform under linux
+
+Release kdriveExpress-14.3.0 (2014-05-06)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-767] - Added workaround for cEMI usb interfaces which do not have a mask version 
+               (to reduce delay on open)
+[KDRIVE-923] - Fixed tunneling port: It was possible that the device management was not auto closed.
+               It was only closed in the first one. After reconnect it was no more auto closed
+[KDRIVE-925] - TunnelingPort: Do not fail open when the device management connection is used by an 
+               other client
+
+Release kdriveExpress-14.2.0 (2014-03-21) (not public released)
+---------------------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-915] - Added support for KNX long frames in the USB access port
+
+Services
+~~~~~~~~
+
+[KDRIVE-906] - Fixed service GroupValueRead. It returns an empty data when the 
+               A_GroupValue_Response indication was compressed. (< 1 byte)
+         
+other
+~~~~~
+
+[KDRIVE-907] - Added user data to all callbacks for kdriveExpress
+
+         
+Release kdriveExpress-14.1.1 (2014-02-13)
+-----------------------------------------
+
+Release kdriveExpress-14.1.0 (2014-02-03) (not released)
+--------------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-832] - kdrive_ap_get_serial_number: Added a more detailedly error message if in the frame 
+               is the AET(address extension type) flag set to domain address instead of serial number
+[KDRIVE-880] - Increase the L-Data.con timeout to 1 s (before 200 ms). Because in some situation
+               need the confirm more time (busy confirms, repetitions, large topology, ...)
+[KDRIVE-889] - Added filter for RF domain address. (Only for RF-interfaces). 
+               Filtered the L-Data.ind, route only system broadcast and tel from the interface domain.
+         
+Services
+~~~~~~~~
+
+[KDRIVE-839] - Fixed service SwitchProgMode with realisation type 2 (memory mapped). The calculation 
+               of the parity bit (bit7) was missing. It works with some new devices (System 7) because
+         they are ignore the parity. But it failed with System 2 devices
+[KDRIVE-840] - Fixed the c interfaces kdrive_sp_switch_prog_mode and 
+               kdrive_sp_switch_prog_mode_memory_mapped and it's .net wrapper SwitchProgMode and
+         SwitchProgModeMemoryMapped. (see also KDRIVE-839)
+[KDRIVE-879] - Fixed property services. Ignore telegrams with not equal APDU data 
+               e.g. ObjectIndex, PropertyId, ...
+         (A_PropertyValue_Read, A_PropertyValue_Write, A_FunctionPropertyCommand and 
+               A_Function_PropertyState_Read)
+[KDRIVE-881] - Changed error handling of received a negative confirm for the request 
+               (e.g. after busy ack): if we wait for a response do not stop when a negative confirm 
+         received. Ignore it and wait anyway for a response.
+         
+other
+~~~~~
+
+[KDRIVE-833] - Signed the kdriveExpress .net assembly with a Strong Name
+
+Release kdrive-13.3.0 (2013-07-02) (not released)
+------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-763] - Added Local Device Management for EMI2 
+
+Release kdrive-13.2.0 (2013-05-31) (not released)
+------------------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-804] - Fixed the c interface kdrive_ap_enum_ip_tunn and it's wrapper EnumerateIpTunneling.
+               The enumeration failed/stopped if one network interface throws an error. 
+         Now log the error and search on the next interface. (see KDRIVE-803)
+         
+Release kdriveExpress-13.1.0 (2013-03-13)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-765] - Added c interface for enumerate knx ip tunneling devices
+[KDRIVE-769] - Added .net wrapper for enumerate knx ip tunneling devices
+[KDRIVE-771] - Fixed the c interface kdrive_ap_set_additional_ind_addr and 
+               kdrive_ap_set_tunnel_ind_addr and it's .net wrapper 
+               SetAccessPortTunnelIndividualAddress and SetAccessPortAdditionalIndividualAddresses. 
+               For more infos see KDRIVE-770
+    
+other
+~~~~~
+
+[KDRIVE-545] - Fixed: The VB.NET samples do not correctly handle the BaosEvent event notification. 
+               It is called from the C++ event thread context and should instead be called from the
+               Windows Forms GUI thread using Invoke.
+[KDRIVE-736] - .net wrapper: Release unmanaged resources additionally in the finalizer. 
+               So the garbage collector release it when the user forgot release it manually        
+[KDRIVE-780] - c# samples: Added solution and project files for Visual Studio 2010 and 
+               Visual Studio 2012
+
+kdriveExpress-12.9.0 (2012-12-20) (not released)
+------------------------------------------------
+
+Services
+~~~~~~~~
+
+[KDRIVE-747] - Added possibility to change the default response timeout of the kdriveServices in the
+               kdriveExpress libraries (c, .net and com)
+other
+~~~~~
+
+[KDRIVE-635] - Added support for VS 2012
+[KDRIVE-751] - Added finally block and call dispose for ServicePort and AccessPort in the C# 
+               kdrive express samples to ensure that the native resources will release
+         
+Release kdriveExpress-12.8.0 (2012-10-24)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-698] - Added functions for read and write the current used tunnel individual address 
+              (for tunneling access port)
+[KDRIVE-699] - Added functions for read and write the additional individual addresses of a tunneling
+               interface (for tunneling access port)
+
+Services
+~~~~~~~~
+
+[KDRIVE-697] - Added python samples
+       
+Easy
+~~~~
+
+[KDRIVE-709] - kdrive_easy_link_actuator and kdrive_easy_link_sensor returns an error if the link 
+               procedure stopped (StopLink Command) with an error
+
+other
+~~~~~
+
+[KDRIVE-583] - Documented the kernel error codes in kdrive_express_error
+           
+Release kdriveExpress-12.7.0 (2012-08-09)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-690] - Fixed race condition in function kdrive::access::GroupValueReader::read which could
+               cause in the worst case an access violation. Affected wrapper functions:
+               kdrive_ap_read_group_object (c), ReadGroupObject (.net) and ReadObject (COM)
+
+Services
+~~~~~~~~
+
+[KDRIVE-686] - Added for services PropertyValueWrite, MemoryWrite and UserMemoryWrite a function 
+               variant which do not verify the field data in the response
+[KDRIVE-688] - Service MemoryBlockRead: Supports reading of memory blocks where the exact start
+               and end address is unknown
+[KDRIVE-689] - The API for the wrapper functions of the service MemoryBlockRead was changed. 
+               The parameter memory address is now a input and a output. See also KDRIVE-688. 
+               kdrive_sp_memory_block_read (c), MemoryBlockRead (.net) and MemoryBlockRead (COM)
+
+other
+~~~~~
+
+[KDRIVE-687] - Removed deprecated functions setConsoleChannel,  setFileChannel, and shutdown from 
+               Logger. Use SetConsoleChannel etc instead. This is needed, because vb.net is case 
+               insensitive and so the functions could not used. It did not know which func should
+               called
+[KDRIVE-691] - Supported empty data array in .net function Logger::Dump
+
+Release kdriveExpress-12.6.0 (2012-07-27)
+-----------------------------------------
+
+Access
+~~~~~~
+
+[KDRIVE-650] - Added defines for message codes (L_data.req, L_Data.conf and L_Data.ind)
+[KDRIVE-681] - Fixed ATL wrapper GetMessageCode. It threw an exception when the telegram was 
+               smaller than a L_Data telegram. Now, other messages such as M_PropRead_Req or
+               M_Reset_Req are supported
+[KDRIVE-682] - Fixed C binding kdrive_ap_get_message_code It threw an exception when the telegram was
+               smaller than a L_Data telegram. Now, other messages such as M_PropRead_Req or 
+               M_Reset_Req are supported
+[KDRIVE-683] - Fixed .net wrapper AccessPort::GetMessageCode. It threw an exception when the telegram
+               was smaller than a L_Data telegram. Now, other messages such as M_PropRead_Req or 
+               M_Reset_Req are supported
+               
+Services
+~~~~~~~~
+
+[KDRIVE-651] - Added c bindings for MemoryBlockRead and MemoryBlockWrite:
+               kdrive_sp_memory_block_read and kdrive_sp_memory_block_write
+[KDRIVE-652] - Added c bindings for LoadStateRead and LoadStateWrite:
+               kdrive_sp_load_state_read, kdrive_sp_load_state_write and 
+               kdrive_sp_load_state_write_ex
+[KDRIVE-653] - Added .net Wrapper bindings for MemoryBlockRead and MemoryBlockWrite
+[KDRIVE-654] - Added .net Wrapper bindings for LoadStateRead and LoadStateWrite
+[KDRIVE-655] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services: 
+               MemoryBlockRead and MemoryBlockWrite
+[KDRIVE-656] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services:
+               LoadStateRead and LoadStateWrite
+
+Easy
+~~~~
+
+[KDRIVE-665] - Fixed kdrive_easy_set_datapoint_value sends the GroupValue_Write telegram only if the
+               data was modified. Now it will send independent of the current value
+[KDRIVE-666] - Fixed kdriveEasy callback not work if a channel has the channel index 0
+[KDRIVE-660] - Added function which gets the next unused channel id
+[KDRIVE-662] - kdriveEasy Added parameter timeout to link actuator functions
+[KDRIVE-663] - Use size of bits instead of size in bytes for functions 
+               kdrive_easy_set_datapoint_value and kdrive_easy_get_datapoint_value
+[KDRIVE-664] - Added functions kdrive_easy_get_number_of_links which returns the number of links 
+               for a given cannel and datpoint index.
+[KDRIVE-668] - Added function kdrive_easy_restore_channel
+[KDRIVE-677] - Added parameter manufacturer code in the kdrive_easy_link_sensor function. 
+               This value will used in the StartLink Command. The link partner used this e.g. to 
+               filter private connection codes. (=> Link only if both has the same manufacturer code)
+[KDRIVE-671] - Removed the actual datapoint value from datapoint callback function. 
+               Use kdrive_easy_get_datapoint_value to get the values
+[KDRIVE-678] - Added output parameter added to the kdrive_easy_link_sensor function. 
+               It's indicate if the links were added or deleted
+
+other
+~~~~~
+
+[KDRIVE-628] - Added support for key-based license configuration for kdriveExpressCom
+[KDRIVE-639] - Added license for kdriveObjectServer Express and kdriveEasy Express
+
+kdriveExpress-12.5.0 (2012-07-06) (not released)
+------------------------------------------------
+
+[KDRIVE-644] - Sets the define for KDRIVE_MAX_CH_NAME_LEN and KDRIVE_MAX_DP_NAME_LEN to 50 (before 30)
+               and for KDRIVE_MAX_CC_NAME_LEN to 40 (before 30)
+               
+kdriveExpress-12.4.0 (2012-06-20) (not released)
+------------------------------------------------
+
+[KDRIVE-611] - Added support for key-based license configuration for kdriveExpress .net
+[KDRIVE-612] - Renamed function kdrive_ap_set_license to kdrive_lic_set_license
+[KDRIVE-613] - Added function for reading the device descriptor type 0 (mask version):
+               kdrive_sp_device_descriptor_type0_read
+[KDRIVE-614] - Added functions for reading the device descriptor type 2 (easy channel information):
+               kdrive_sp_device_descriptor_type2_read
+[KDRIVE-615] - Added functions for restart (type 0 and type 1): 
+               kdrive_sp_restart_device_type0 and kdrive_sp_restart_device_type1
+[KDRIVE-616] - Added function for read property description:
+               kdrive_sp_property_description_read
+[KDRIVE-617] - Added functions for read/write function property:
+               kdrive_sp_function_property_command and kdrive_sp_function_property_state_read
+[KDRIVE-618] - Added functions for read/write user memory:
+               kdrive_sp_user_memory_read and kdrive_sp_user_memory_write
+[KDRIVE-619] - Added functions for authorize:
+               kdrive_sp_authorize_request and kdrive_sp_key_write
+[KDRIVE-620] - Added .net wrapper for following kdriveExpress services:
+               DeviceDescriptorType0Read, DeviceDescriptorType2Read, RestartDeviceType0, 
+               RestartDeviceType1, PropertyDescriptionRead, FunctionPropertyCommand and 
+               FunctionPropertyStateRead
+[KDRIVE-621] - Added .net wrapper for following kdriveExpress services: 
+               MemoryRead, MemoryWrite, UserMemoryRead, UserMemoryWrite, AuthorizeRequest,
+               KeyWrite, IndividualAddressSerialNumberRead and IndividualAddressSerialNumberWrite
+[KDRIVE-622] - Added .net wrapper for following kdriveExpress services:
+               NetworkParameterWriteBroadcast, NetworkParameterWriteSystemBroadcast, 
+               DomainAddressProgModeRead, DomainAddressProgModeWrite, DomainAddressSerialNumberRead
+               and DomainAddressSerialNumberWrite
+[KDRIVE-623] - Added kdriveExpress C bindings, a simple C interface to kdriveEasy
+[KDRIVE-629] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services:
+               DeviceDescriptorType0Read, RestartDeviceType0, RestartDeviceType1, 
+               PropertyDescriptionRead, FunctionPropertyCommand and FunctionPropertyStateRead
+[KDRIVE-630] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services:
+               MemoryRead, MemoryWrite, UserMemoryRead, UserMemoryWrite, AuthorizeRequest and 
+               KeyWrite
+[KDRIVE-631] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services: ReadProgMode,
+               ReadProgModePropertyBased, ReadProgModeMemoryMapped and SwitchProgModePropertyBased
+               and SwitchProgModeMemoryMapped
+[KDRIVE-632] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services: 
+               IndividualAddressProgModeRead, IndividualAddressProgModeWrite, 
+               IndividualAddressSerialNumberRead and IndividualAddressSerialNumberWrite
+[KDRIVE-633] - Added ATL wrapper (Active-X / COM DLL) for following kdrive services: 
+               NetworkParameterWriteBroadcast and NetworkParameterWriteSystemBroadcast
+[KDRIVE-638] - Added function to get the datapoint type informations (name and size in bits) from a
+               given datapoint type id: kdrive_dpt_get_dpt_descriptor
+               
+kdriveExpress-12.3.0 (2012-05-22) (not released)
+------------------------------------------------
+
+[KDRIVE-604] - Added support for key-based license configuration for kdriveExpress
+
+Release kdriveExpress-12.2.0 (2012-05-10)
+-----------------------------------------
+
+[KDRIVE-596] - Modified function kdrive_sp_switch_prog_mode. It tries it PropertyBased and if this 
+               was failed than try it MemoryMapped
+[KDRIVE-597] - Added functions kdrive_sp_switch_prog_mode_property_based and 
+               kdrive_sp_switch_prog_mode_memory_mapped
+[KDRIVE-598] - Added functions for reading the programming mode.
+               kdrive_sp_read_prog_mode, kdrive_sp_read_prog_mode_property_based and 
+               kdrive_sp_read_prog_mode_memory_mapped
+[KDRIVE-599] - Added functions for reading and writing memory.
+               kdrive_sp_memory_read and kdrive_sp_memory_write
+[KDRIVE-600] - Added .net wrapper for kdriveExpress services. 
+               For following services: PropertyValueRead, PropertyValueWrite, ReadProgMode, 
+               SwitchProgMode, IndividualAddressProgModeRead and IndividualAddressProgModeWrite
+[KDRIVE-601] - Added service sample for kdriveExpress .net
+
+Release kdriveExpress-12.1.1 (2012-03-23)
+-----------------------------------------
+
+[KDRIVE-546] - Fixed a small bug with an exception warning on closing the kdriveExpress Access Port
+               when receiving an On Close event.
+               
+Release kdriveExpress-12.1.0 (2012-03-22)
+-----------------------------------------
+
+[KDRIVE-521] - Added support for datapoint value conversions to kdriveExpress               
+[KDRIVE-524] - Added support for PropertyValueRead, PropertyValueWrite, SwitchProgMode, 
+               IndividualAddressProgModeWrite and IndividualAddressProgModeRead 
+               services in the kdriveExpress free version
+[KDRIVE-532] - kdriveExpress USB documentation for debian: restart udev with /etc/init.d/udev
+
+
+Release kdriveExpress-11.4.2 (2011-12-16)
+-----------------------------------------
+
+[KDRIVE-464] - Fixed formatter for DescriptionRequestBody. The service type was set to SEARCH_REQUEST
+               instead of DESCRIPTION_REQUEST. So TunnelingPort::readSupportedLayersImpl returns always
+               link layer and busmonitor and logs warning:
+               "Device Description could not read. Exception: No valid DescriptionResponseFrames rcvd."
+[KDRIVE-465] - Fixed signed/unsigned problem in linux usb hid driver for arm.
+
+Release kdriveExpress-11.4.1 (2011-12-08)
+-----------------------------------------
+
+[KDRIVE-454] - Fixed deadlock in kdriveExpress error callback when calling kdrive_get_error_message
+[KDRIVE-457] - Added support to kdriveExpress to extract the Serial Number 
+               from a telegram (Additional Info, only for KNX-RF telegrams)
+[KDRIVE-458] - Fixed Endless loop in kdrive when USB device gets unplugged (Linux)
+               
+Release kdriveExpress-11.2.0 (2011-11-14)
+-----------------------------------------
+
+[KDRIVE-434] - TinySerial now throws an Exception when the TP-UART 
+               controller can not be reset in open
+[KDRIVE-435] - Added missing kdriveExpress access api to C# bindings
+[KDRIVE-436] - Updated kdriveExpress C# TinySerial sample for GroupValueRead.
+[KDRIVE-438] - Added static functions to C# access bindings for kdriveExpress 
+               where an AccessPort is not really required. i.e. IsGroup etc.
+
+Release kdriveExpress-11.1.0 (2011-11-08)
+-----------------------------------------
+
+[KDRIVE-412] - .NET Console Logger not visible during Debug when 
+               using the managed C++ .NET kdrive Logger wrapper.
+[KDRIVE-426] - Added TinySerial and other missing Access Ports 
+               from kdriveExpress into the C# bindings api.
+
+Release kdriveExpress-11.0.0 (2011-10-27)
+-----------------------------------------
+
+[KDRIVE-407] - First public release of kdrive

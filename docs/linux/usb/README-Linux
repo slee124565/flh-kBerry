@@ -1,0 +1,25 @@
+
+as root:
+
+# copy 90-knxusb.rules to /etc/udev/rules.d 
+
+# add the knx group
+groupadd --system knx
+
+# add user to the group. replace "user" with the actual user name 
+# you may have to log out and log back in after this
+gpasswd -a user knx
+
+# restart udev (note this can vary across distributions)
+# for example on debian:
+/etc/init.d/udev restart 
+
+# and restart udev arch linux
+udevadm control restart
+
+# check that the relevant devices in /dev/usb/ have the knx group
+ls -la /dev/usb/*
+
+# troubleshooting
+# find device information with udev: in this case, on hiddev0
+for DEVICE in $(find /sys ! -type l -iname "*hiddev0*"); do ls -dl $DEVICE; udevadm info -a -p $DEVICE; done
